@@ -1,6 +1,9 @@
 package com.br.alura.forum.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +14,7 @@ import com.br.alura.forum.modelo.DTOs.DadosResposta;
 import com.br.alura.forum.repositories.RespostaRepository;
 
 @RestController
-@RequestMapping("/resposta")
+@RequestMapping("/respostas")
 public class RespostaController {
     
     @Autowired
@@ -20,5 +23,10 @@ public class RespostaController {
     @PostMapping
     public void cadastrar(@RequestBody DadosResposta dados) {
         repository.save(new Resposta(dados));
+    }
+
+    @GetMapping
+    public List<Resposta> listar() {
+        return repository.findAll();
     }
 }
