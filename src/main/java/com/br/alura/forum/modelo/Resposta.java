@@ -2,6 +2,8 @@ package com.br.alura.forum.modelo;
 
 import java.time.LocalDate;
 
+import com.br.alura.forum.modelo.DTOs.DadosResposta;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,4 +38,11 @@ public class Resposta {
 	private Usuario autor;
 	private Boolean solucao = false;
 
+	public Resposta(DadosResposta dados) {
+		this.mensagem = dados.mensagem();
+		this.topico = dados.topico();
+		this.dataCriacao = dados.dataCriacao();
+		this.autor = dados.autor();
+		this.solucao = dados.solucao();
+	}
 }

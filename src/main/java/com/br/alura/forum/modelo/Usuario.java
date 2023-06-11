@@ -1,5 +1,7 @@
 package com.br.alura.forum.modelo;
 
+import com.br.alura.forum.modelo.DTOs.DadosUsuario;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,4 +25,10 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+
+    public Usuario(DadosUsuario dados) {
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.senha = dados.senha();
+    }
 }
