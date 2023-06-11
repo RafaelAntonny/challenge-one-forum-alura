@@ -2,7 +2,7 @@ create table respostas (
 
     id bigint not null auto_increment,
     mensagem varchar(2500) not null,
-    topico_id bigint not null auto_increment,
+    topico_id bigint not null,
     dataCriacao date not null,
     usuario_id bigint not null,
     solucao tinyint not null,
