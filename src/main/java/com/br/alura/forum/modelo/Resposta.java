@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.br.alura.forum.modelo.DTOs.DadosResposta;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,12 +29,12 @@ public class Resposta {
 	private Long id;
 	private String mensagem;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topico_id")
 	private Topico topico;
 	private LocalDate dataCriacao = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id")
 	private Usuario autor;
 	private Boolean solucao = false;
