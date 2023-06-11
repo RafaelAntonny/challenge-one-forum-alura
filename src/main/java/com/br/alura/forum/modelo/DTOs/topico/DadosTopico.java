@@ -1,4 +1,4 @@
-package com.br.alura.forum.modelo.DTOs;
+package com.br.alura.forum.modelo.DTOs.topico;
 
 import java.time.LocalDate;
 import java.util.List;
