@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.br.alura.forum.modelo.DTOs.DadosTopico;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,9 +38,11 @@ public class Topico {
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
 
     @ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private Usuario autor;
 
-    @Embedded
+    @ManyToOne
+	@JoinColumn(name = "curso_id")
 	private Curso curso;
 	private List<Resposta> respostas = new ArrayList<>();
 
