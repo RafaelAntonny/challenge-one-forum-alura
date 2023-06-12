@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class RespostaController {
     private RespostaRepository repository;
 
     @PostMapping
+    @Transactional
     public ResponseEntity cadastrar(@RequestBody DadosResposta dados, UriComponentsBuilder uriBuilder) {
         var resposta = new Resposta(dados);
         repository.save(resposta);
@@ -62,5 +64,13 @@ public class RespostaController {
         resposta.atualizarResposta(dados);
 
         return ResponseEntity.ok(new DadosListagemResposta(resposta));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

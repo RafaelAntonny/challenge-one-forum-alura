@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.alura.forum.modelo.Curso;
-import com.br.alura.forum.modelo.Resposta;
 import com.br.alura.forum.modelo.DTOs.curso.DadosAtualizarCurso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosCurso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosListagemCurso;
-import com.br.alura.forum.modelo.DTOs.resposta.DadosAtualizarResposta;
-import com.br.alura.forum.modelo.DTOs.resposta.DadosListagemResposta;
-import com.br.alura.forum.modelo.DTOs.resposta.DadosResposta;
 import com.br.alura.forum.repositories.CursoRepository;
 
 import jakarta.transaction.Transactional;
@@ -36,6 +33,7 @@ public class CursoController {
     private CursoRepository repository;
 
     @PostMapping
+    @Transactional
     public ResponseEntity cadastrar(@RequestBody DadosCurso dados, UriComponentsBuilder uriBuilder) {
         var curso = new Curso(dados);
         repository.save(curso);
@@ -46,7 +44,7 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemCurso>> listar(@PageableDefault(size = 10, sort = {"dataCriacao"}, direction = Sort.Direction.ASC) Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemCurso>> listar(@PageableDefault(size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao) {
         var page = repository.findAll(paginacao).map(DadosListagemCurso::new);
 
         return ResponseEntity.ok(page);
@@ -66,5 +64,13 @@ public class CursoController {
         curso.atualizarCurso(dados);
 
         return ResponseEntity.ok(new DadosListagemCurso(curso));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
