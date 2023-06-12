@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.br.alura.forum.modelo.DTOs.topico.DadosAtualizarTopico;
 import com.br.alura.forum.modelo.DTOs.topico.DadosNovoTopico;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,6 +50,15 @@ public class Topico {
 	private List<Resposta> respostas = new ArrayList<>();
 
 	public Topico(DadosNovoTopico dados) {
+		this.titulo = dados.titulo();
+		this.mensagem = dados.mensagem();
+		this.dataCriacao = LocalDate.now();
+		this.status = dados.status();
+		this.autor = new Usuario(dados.autor());
+		this.curso = new Curso(dados.curso());
+	}
+
+	public void atualizarTopico(DadosAtualizarTopico dados) {
 		this.titulo = dados.titulo();
 		this.mensagem = dados.mensagem();
 		this.dataCriacao = LocalDate.now();

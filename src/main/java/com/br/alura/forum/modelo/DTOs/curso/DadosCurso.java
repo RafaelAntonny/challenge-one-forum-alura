@@ -1,4 +1,4 @@
-package com.br.alura.forum.modelo.DTOs;
+package com.br.alura.forum.modelo.DTOs.curso;
 
 import jakarta.validation.constraints.NotNull;
 

@@ -1,9 +1,9 @@
-package com.br.alura.forum.modelo.DTOs;
+package com.br.alura.forum.modelo.DTOs.resposta;
 
 import java.time.LocalDate;
 
-import com.br.alura.forum.modelo.Topico;
-import com.br.alura.forum.modelo.Usuario;
+import com.br.alura.forum.modelo.DTOs.topico.DadosNovoTopico;
+import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -15,12 +15,12 @@ public record DadosResposta(
     String mensagem,
     @NotNull
     @Valid 
-    Topico topico,
+    DadosNovoTopico topico,
     @NotNull
     LocalDate dataCriacao,
     @NotNull
     @Valid
-    Usuario autor,
+    DadosUsuario autor,
     @NotNull 
     Boolean solucao){
     

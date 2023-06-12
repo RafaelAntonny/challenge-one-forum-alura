@@ -6,8 +6,8 @@ import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 
 import jakarta.validation.constraints.NotNull;
 
-public record DadosNovoTopico(
-
+public record DadosAtualizarTopico(
+    
     @NotNull
     long id,
     @NotNull 
@@ -19,5 +19,6 @@ public record DadosNovoTopico(
     @NotNull 
     DadosUsuario autor,
     @NotNull 
-    DadosCurso curso) {    
+    DadosCurso curso) {
+    
 }

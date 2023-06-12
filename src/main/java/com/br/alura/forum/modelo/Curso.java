@@ -1,12 +1,14 @@
 package com.br.alura.forum.modelo;
 
-import com.br.alura.forum.modelo.DTOs.DadosCurso;
+import com.br.alura.forum.modelo.DTOs.curso.DadosAtualizarCurso;
+import com.br.alura.forum.modelo.DTOs.curso.DadosCurso;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,4 +33,10 @@ public class Curso {
 		this.nome = dados.nome();
 		this.categoria = dados.categoria();
 	}
+
+    public void atualizarCurso(DadosAtualizarCurso dados) {
+
+		this.nome = dados.nome();
+		this.categoria = dados.categoria();
+    }
 }

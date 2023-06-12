@@ -1,6 +1,7 @@
 package com.br.alura.forum.modelo;
 
-import com.br.alura.forum.modelo.DTOs.DadosUsuario;
+import com.br.alura.forum.modelo.DTOs.usuario.DadosAtualizarUsuario;
+import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,5 +32,11 @@ public class Usuario {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();
+    }
+
+    public void atualizarUsuario(DadosAtualizarUsuario dados) {
+        this.nome = dados.nome();
+        this.nome = dados.email();
+        this.nome = dados.senha();
     }
 }
