@@ -8,6 +8,6 @@ create table respostas (
     solucao tinyint not null,
 
     primary key(id),
-    constraint fk_respostas_topico_id foreign key(topico_id) references topicos(id),
-    constraint fk_respostas_usuario_id foreign key(usuario_id) references usuarios(id)
+    constraint fk_respostas_topico_id foreign key(topico_id) references topicos(id) on delete cascade,
+    constraint fk_respostas_usuario_id foreign key(usuario_id) references usuarios(id) on delete cascade
 );
