@@ -1,5 +1,7 @@
 package com.br.alura.forum.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,20 +36,20 @@ public class CursoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody DadosCurso dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCurso dados, UriComponentsBuilder uriBuilder) {
         var curso = new Curso(dados);
         repository.save(curso);
 
-        var uri = uriBuilder.path("/cursos/{id}").buildAndExpand(curso.getId()).toUri();
+        var uri = uriBuilder.path("/cursos/{id}").buildAndExpand(String.valueOf(curso.getId())).toUri();
 
         return ResponseEntity.created(uri).body(new DadosListagemCurso(curso));
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemCurso>> listar(@PageableDefault(size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao) {
-        var page = repository.findAll(paginacao).map(DadosListagemCurso::new);
+    public ResponseEntity<List<DadosListagemCurso>> listar() {
+        var curso = repository.findAllTop10ByOrderByNomeAsc().stream().map(DadosListagemCurso::new).toList();
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(curso);
     }
 
     @GetMapping("/{id}")

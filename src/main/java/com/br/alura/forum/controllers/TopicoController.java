@@ -1,10 +1,8 @@
 package com.br.alura.forum.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,17 +36,24 @@ public class TopicoController {
         var topico = new Topico(dados);
         repository.save(topico);
 
-        var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+        var uri = uriBuilder.path("{id}").buildAndExpand(topico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosListagemTopico(topico));
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemTopico>> listar(@PageableDefault(size = 10, sort = {"dataCriacao"}, direction = Sort.Direction.ASC) Pageable paginacao) {
-        var page = repository.findAll(paginacao).map(DadosListagemTopico::new);
+    public ResponseEntity<List<DadosListagemTopico>> listar() {
+        var topico = repository.findAllTop10ByOrderByDataCriacaoAsc().stream().map(DadosListagemTopico::new).toList();
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(topico);
     }
+
+    @GetMapping("/curso/{nome}")
+    public ResponseEntity<List<DadosListagemTopico>> listarPorCursoNome(@PathVariable String nome) {
+        var topico = repository.findAllTop10ByCursoNomeOrderByDataCriacaoAsc(nome).stream().map(DadosListagemTopico::new).toList();
+
+        return ResponseEntity.ok(topico);
+    }    
 
     @GetMapping("/{id}")
     public ResponseEntity detalhar(@PathVariable Long id) {

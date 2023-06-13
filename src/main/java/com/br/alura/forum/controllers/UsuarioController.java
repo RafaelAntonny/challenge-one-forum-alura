@@ -1,5 +1,7 @@
 package com.br.alura.forum.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.alura.forum.modelo.Usuario;
+import com.br.alura.forum.modelo.DTOs.topico.DadosListagemTopico;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosAtualizarUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosListagemUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
@@ -37,16 +40,16 @@ public class UsuarioController {
         var usuario = new Usuario(dados);
         repository.save(usuario);
 
-        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(String.valueOf(usuario.getId())).toUri();
 
         return ResponseEntity.created(uri).body(new DadosListagemUsuario(usuario));
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemUsuario>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        var page = repository.findAll(paginacao).map(DadosListagemUsuario::new);
+    public ResponseEntity<List<DadosListagemUsuario>> listar() {
+        var topico = repository.findAllTop10ByOrderByNomeAsc().stream().map(DadosListagemUsuario::new).toList();
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(topico);
     }
 
     @GetMapping("/{id}")
