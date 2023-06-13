@@ -35,8 +35,15 @@ public class Usuario {
     }
 
     public void atualizarUsuario(DadosAtualizarUsuario dados) {
-        this.nome = dados.nome();
-        this.nome = dados.email();
-        this.nome = dados.senha();
+
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if(dados.email() != null){
+            this.email = dados.email();
+        }
+        if(dados.senha() != null){
+            this.senha = dados.senha();
+        }
     }
 }

@@ -59,11 +59,14 @@ public class Topico {
 	}
 
 	public void atualizarTopico(DadosAtualizarTopico dados) {
-		this.titulo = dados.titulo();
-		this.mensagem = dados.mensagem();
-		this.dataCriacao = LocalDate.now();
-		this.status = dados.status();
-		this.autor = new Usuario(dados.autor());
-		this.curso = new Curso(dados.curso());
+		if (dados.titulo() != null) {
+			this.titulo = dados.titulo();
+		}
+		if (dados.mensagem() != null) {
+			this.mensagem = dados.mensagem();
+		}
+		if (dados.status() != null) {
+			this.status = dados.status();
+		}
 	}
 }

@@ -48,10 +48,12 @@ public class Resposta {
 	}
 
     public void atualizarResposta(DadosAtualizarResposta dados) {
-		this.mensagem = dados.mensagem();
-		this.topico = new Topico(dados.topico());
-		this.dataCriacao = dados.dataCriacao();
-		this.autor = new Usuario(dados.autor());
-		this.solucao = dados.solucao();
+
+		if (dados.mensagem() != null) {
+			this.mensagem = dados.mensagem();
+		}
+		if (dados.solucao() != null) {
+			this.solucao = dados.solucao();
+		}
     }
 }

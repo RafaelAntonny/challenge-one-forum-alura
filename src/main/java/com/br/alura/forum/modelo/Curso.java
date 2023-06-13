@@ -35,7 +35,12 @@ public class Curso {
 
     public void atualizarCurso(DadosAtualizarCurso dados) {
 
-		this.nome = dados.nome();
-		this.categoria = dados.categoria();
+		if (dados.nome() != null) {
+			this.nome = dados.nome();	
+		}
+		
+		if(dados.categoria() != null) {
+			this.categoria = dados.categoria();
+		}
     }
 }
