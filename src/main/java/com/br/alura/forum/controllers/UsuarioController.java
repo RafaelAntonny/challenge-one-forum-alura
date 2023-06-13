@@ -3,9 +3,6 @@ package com.br.alura.forum.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.alura.forum.modelo.Usuario;
-import com.br.alura.forum.modelo.DTOs.topico.DadosListagemTopico;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosAtualizarUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosListagemUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
