@@ -1,6 +1,7 @@
 package com.br.alura.forum.modelo;
 
 import com.br.alura.forum.modelo.DTOs.curso.DadosAtualizarCurso;
+import com.br.alura.forum.modelo.DTOs.curso.DadosCadastrarCurso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosCurso;
 
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Curso {
 	private String categoria;
 
 	public Curso(DadosCurso dados) {
+		this.id = dados.id();
 		this.nome = dados.nome();
 		this.categoria = dados.categoria();
 	}
@@ -41,5 +43,10 @@ public class Curso {
 		if(dados.categoria() != null) {
 			this.categoria = dados.categoria();
 		}
+    }
+
+    public Curso(DadosCadastrarCurso dados) {
+		this.nome = dados.nome();
+		this.categoria = dados.categoria();
     }
 }

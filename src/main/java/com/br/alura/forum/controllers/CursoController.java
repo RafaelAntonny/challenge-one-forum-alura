@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.alura.forum.modelo.Curso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosAtualizarCurso;
-import com.br.alura.forum.modelo.DTOs.curso.DadosCurso;
+import com.br.alura.forum.modelo.DTOs.curso.DadosCadastrarCurso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosListagemCurso;
 import com.br.alura.forum.repositories.CursoRepository;
 
@@ -32,11 +32,11 @@ public class CursoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCurso dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastrarCurso dados, UriComponentsBuilder uriBuilder) {
         var curso = new Curso(dados);
         repository.save(curso);
 
-        var uri = uriBuilder.path("/cursos/{id}").buildAndExpand(String.valueOf(curso.getId())).toUri();
+        var uri = uriBuilder.path("/cursos/{id}").buildAndExpand(curso.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosListagemCurso(curso));
     }

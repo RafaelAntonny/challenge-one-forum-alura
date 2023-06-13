@@ -1,6 +1,7 @@
 package com.br.alura.forum.modelo;
 
 import com.br.alura.forum.modelo.DTOs.usuario.DadosAtualizarUsuario;
+import com.br.alura.forum.modelo.DTOs.usuario.DadosCadastrarUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Usuario {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;
@@ -45,5 +46,12 @@ public class Usuario {
         if(dados.senha() != null){
             this.senha = dados.senha();
         }
+    }
+
+    public Usuario(DadosCadastrarUsuario dados) {
+        this.id = dados.id();
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.senha = dados.senha();
     }
 }

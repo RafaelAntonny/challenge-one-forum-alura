@@ -7,9 +7,6 @@ import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosNovoTopico(
-
-    @NotNull
-    long id,
     @NotNull 
     String titulo,
     @NotNull 

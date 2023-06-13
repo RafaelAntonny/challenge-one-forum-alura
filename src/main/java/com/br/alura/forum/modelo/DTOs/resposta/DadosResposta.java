@@ -8,9 +8,7 @@ import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-public record DadosResposta(
-    @NotNull
-    Long id, 
+public record DadosResposta( 
     @NotNull
     String mensagem,
     @NotNull

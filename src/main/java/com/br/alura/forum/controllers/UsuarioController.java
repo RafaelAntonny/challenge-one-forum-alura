@@ -16,8 +16,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.alura.forum.modelo.Usuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosAtualizarUsuario;
+import com.br.alura.forum.modelo.DTOs.usuario.DadosCadastrarUsuario;
 import com.br.alura.forum.modelo.DTOs.usuario.DadosListagemUsuario;
-import com.br.alura.forum.modelo.DTOs.usuario.DadosUsuario;
 import com.br.alura.forum.repositories.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -32,7 +32,7 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosUsuario dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastrarUsuario dados, UriComponentsBuilder uriBuilder) {
         var usuario = new Usuario(dados);
         repository.save(usuario);
 

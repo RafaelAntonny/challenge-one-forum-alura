@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosCurso(
     @NotNull
-    long id,
+    Long id,
     @NotNull
     String nome,
     @NotNull

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public record DadosAtualizarTopico(
     
     @NotNull
-    long id,
+    Long id,
     @NotNull 
     String titulo,
     @NotNull 
