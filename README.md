@@ -24,7 +24,7 @@
 - [Spring Security](https://start.spring.io/)
 - [Token JWT](https://jwt.io/)
 
-
+<p><strong>PARA TESTAR O CADASTRAR TOPICOS É NESCESSARIO TER UM CURSO E UM USUARIO EXISTENTE!!<strong</p>
 
 ## ⬇️ Download
 
