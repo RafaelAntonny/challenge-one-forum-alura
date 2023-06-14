@@ -20,6 +20,7 @@ import com.br.alura.forum.modelo.DTOs.resposta.DadosListagemResposta;
 import com.br.alura.forum.modelo.DTOs.resposta.DadosResposta;
 import com.br.alura.forum.repositories.RespostaRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -30,9 +31,10 @@ public class RespostaController {
     @Autowired
     private RespostaRepository repository;
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosResposta dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DadosListagemResposta> cadastrar(@RequestBody @Valid DadosResposta dados, UriComponentsBuilder uriBuilder) {
         var resposta = new Resposta(dados);
         repository.save(resposta);
 
@@ -41,6 +43,7 @@ public class RespostaController {
         return ResponseEntity.created(uri).body(new DadosListagemResposta(resposta));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public ResponseEntity<List<DadosListagemResposta>> listar() {
         var resposta = repository.findAllTop10ByOrderByDataCriacaoAsc().stream().map(DadosListagemResposta::new).toList();
@@ -48,25 +51,28 @@ public class RespostaController {
         return ResponseEntity.ok(resposta);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id) {
+    public ResponseEntity<DadosListagemResposta> detalhar(@PathVariable Long id) {
         Resposta referenceById = repository.getReferenceById(id);
         var resposta = referenceById;
         return ResponseEntity.ok(new DadosListagemResposta(resposta));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarResposta dados) {
+    public ResponseEntity<DadosListagemResposta> atualizar(@RequestBody @Valid DadosAtualizarResposta dados) {
         var resposta = repository.getReferenceById(dados.id());
         resposta.atualizarResposta(dados);
 
         return ResponseEntity.ok(new DadosListagemResposta(resposta));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

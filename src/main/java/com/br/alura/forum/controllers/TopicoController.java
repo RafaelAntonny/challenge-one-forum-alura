@@ -20,6 +20,7 @@ import com.br.alura.forum.modelo.DTOs.topico.DadosListagemTopico;
 import com.br.alura.forum.modelo.DTOs.topico.DadosNovoTopico;
 import com.br.alura.forum.repositories.TopicoRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -30,9 +31,10 @@ public class TopicoController {
     @Autowired
     private TopicoRepository repository;
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosNovoTopico dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DadosListagemTopico> cadastrar(@RequestBody @Valid DadosNovoTopico dados, UriComponentsBuilder uriBuilder) {
         var topico = new Topico(dados);
         repository.save(topico);
 
@@ -41,6 +43,7 @@ public class TopicoController {
         return ResponseEntity.created(uri).body(new DadosListagemTopico(topico));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public ResponseEntity<List<DadosListagemTopico>> listar() {
         var topico = repository.findAllTop10ByOrderByDataCriacaoAsc().stream().map(DadosListagemTopico::new).toList();
@@ -48,6 +51,7 @@ public class TopicoController {
         return ResponseEntity.ok(topico);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/curso/{nome}")
     public ResponseEntity<List<DadosListagemTopico>> listarPorCursoNome(@PathVariable String nome) {
         var topico = repository.findAllTop10ByCursoNomeOrderByDataCriacaoAsc(nome).stream().map(DadosListagemTopico::new).toList();
@@ -55,25 +59,28 @@ public class TopicoController {
         return ResponseEntity.ok(topico);
     }    
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id) {
+    public ResponseEntity<DadosListagemTopico> detalhar(@PathVariable Long id) {
         Topico referenceById = repository.getReferenceById(id);
         var topico = referenceById;
         return ResponseEntity.ok(new DadosListagemTopico(topico));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarTopico dados) {
+    public ResponseEntity<DadosListagemTopico> atualizar(@RequestBody @Valid DadosAtualizarTopico dados) {
         var topico = repository.getReferenceById(dados.id());
         topico.atualizarTopico(dados);
 
         return ResponseEntity.ok(new DadosListagemTopico(topico));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

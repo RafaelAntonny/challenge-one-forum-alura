@@ -20,6 +20,7 @@ import com.br.alura.forum.modelo.DTOs.curso.DadosCadastrarCurso;
 import com.br.alura.forum.modelo.DTOs.curso.DadosListagemCurso;
 import com.br.alura.forum.repositories.CursoRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -30,9 +31,10 @@ public class CursoController {
     @Autowired
     private CursoRepository repository;
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastrarCurso dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DadosListagemCurso> cadastrar(@RequestBody @Valid DadosCadastrarCurso dados, UriComponentsBuilder uriBuilder) {
         var curso = new Curso(dados);
         repository.save(curso);
 
@@ -41,6 +43,7 @@ public class CursoController {
         return ResponseEntity.created(uri).body(new DadosListagemCurso(curso));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public ResponseEntity<List<DadosListagemCurso>> listar() {
         var curso = repository.findAllTop10ByOrderByNomeAsc().stream().map(DadosListagemCurso::new).toList();
@@ -48,25 +51,28 @@ public class CursoController {
         return ResponseEntity.ok(curso);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id) {
+    public ResponseEntity<DadosListagemCurso> detalhar(@PathVariable Long id) {
         Curso referenceById = repository.getReferenceById(id);
         var curso = referenceById;
         return ResponseEntity.ok(new DadosListagemCurso(curso));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarCurso dados) {
+    public ResponseEntity<DadosListagemCurso> atualizar(@RequestBody @Valid DadosAtualizarCurso dados) {
         var curso = repository.getReferenceById(dados.id());
         curso.atualizarCurso(dados);
 
         return ResponseEntity.ok(new DadosListagemCurso(curso));
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
